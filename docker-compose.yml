@@ -1,0 +1,28 @@
+version: '2'
+
+services:
+  data-generators:
+    build:
+      context: .
+      dockerfile: generator_simulator/Dockerfile.template
+    environment:
+      - GENERATORS=3
+      - BROKER=hivemq
+    networks:
+      - mqtt
+    depends_on:
+      - "emqx"
+  emqx:
+    image: emqx/emqx:latest
+    ports:
+      - "80:18083" # Dashboard
+      - "1883:1883" # MQTT/TCP protocol port
+      - "11883:11883" # MQTT/TCP Protocol internal port, only used for local client connection
+      - "8883:8883" # MQTT/SSL protocol port
+      - "8083:8083" # MQTT/WS protocol port
+      - "8084:8084" # MQTT/WSS protocol port
+    networks:
+      - mqtt
+networks:
+  mqtt:
+
