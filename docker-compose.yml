@@ -7,7 +7,7 @@ services:
       dockerfile: generator_simulator/Dockerfile.template
     environment:
       - GENERATORS=3
-      - BROKER=hivemq
+      - BROKER=emqx
     networks:
       - mqtt
     depends_on:
